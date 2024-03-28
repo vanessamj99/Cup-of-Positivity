@@ -62,17 +62,14 @@ struct Notifications: View {
         
     }
     func notif() {
-        let randomInt = Int(arc4random_uniform(UInt32(items.count)))
-        let content = UNMutableNotificationContent()
-        content.title = "A Little Bit of Positivity"
-        content.body = "\(items[Int(randomInt)].quote ?? "I hope you have an amazing day!")"
-        var dateComponents = DateComponents()
-        dateComponents.calendar = Calendar.current
-        dateComponents.hour = 15
-        dateComponents.minute = 19
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+//        var dateComponents = DateComponents()
+//        dateComponents.calendar = Calendar.current
+//        dateComponents.hour = 11
+//        dateComponents.minute = 04
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: uuidString, content: contentInfo(), trigger: trigger)
         let notificationCenter = UNUserNotificationCenter.current()
             notificationCenter.removeAllPendingNotificationRequests()
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
@@ -84,6 +81,14 @@ struct Notifications: View {
             }
             
         }
+    }
+    
+    func contentInfo() -> UNMutableNotificationContent {
+        let randomInt = Int(arc4random_uniform(UInt32(items.count)))
+        let content = UNMutableNotificationContent()
+        content.title = "A Little Bit of Positivity"
+        content.body = "\(items[Int(randomInt)].quote ?? "I hope you have an amazing day!")"
+        return content
     }
 
 }
