@@ -22,10 +22,10 @@ struct AllCurrentQuotes: View {
             ForEach(items, id: \.id) { quoteObject in
                 Text("\(quoteObject.quote ?? "Unavailable Quote")")
                     .font(.custom("AirTravelersPersonalUse-BdIt", size: 30))
-                        .padding(10)
-                        .background(Color.pink)
-                        .clipShape(.rect(cornerRadius: 20))
-                        .gesture(deletionGesture(for: quoteObject))
+                    .padding(10)
+                    .background(Color.pink)
+                    .clipShape(.rect(cornerRadius: 20))
+                    .gesture(deletionGesture(for: quoteObject))
             }
         }.toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -45,24 +45,24 @@ struct AllCurrentQuotes: View {
     }
     
     private func deletionGesture(for quote: Quote) -> some Gesture {
-          DragGesture()
-              .onEnded { _ in
-                  deleteQuote(quote)
-              }
-      }
-      
-      private func deleteQuote(_ quote: Quote) {
-          guard isDeleteModeActive else { return }
-          viewContext.delete(quote)
-          
-          do {
-              try viewContext.save()
-              isDeleteModeActive = false
-          } catch {
-              let nsError = error as NSError
-              fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-          }
-      }
+        DragGesture()
+            .onEnded { _ in
+                deleteQuote(quote)
+            }
+    }
+    
+    private func deleteQuote(_ quote: Quote) {
+        guard isDeleteModeActive else { return }
+        viewContext.delete(quote)
+        
+        do {
+            try viewContext.save()
+            isDeleteModeActive = false
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
 }
 
 

@@ -10,7 +10,7 @@ import CoreData
 
 struct Notifications: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(
         sortDescriptors: [],
         animation: .default) private var items: FetchedResults<Quote>
@@ -63,13 +63,13 @@ struct Notifications: View {
                         }
                                , label: {
                             Text("I want to add a quote")
-                                    .font(.custom("AirTravelersPersonalUse-BdIt", size: 18))
-                                    .padding()
-                                    .background(Color.pink)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                    .foregroundColor(Color.black)
+                                .font(.custom("AirTravelersPersonalUse-BdIt", size: 18))
+                                .padding()
+                                .background(Color.pink)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .foregroundColor(Color.black)
                         })
-                    
+                        
                         
                         NavigationLink(destination: FeedOfQuotes()) {
                             Text("Current Quotes")
@@ -83,7 +83,7 @@ struct Notifications: View {
                     .padding()
                     .position(x: 200, y: 720)
                 }
-            
+                
             }
             .onAppear {
                 notif()
@@ -111,7 +111,7 @@ struct Notifications: View {
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: contentInfo(), trigger: trigger)
         let notificationCenter = UNUserNotificationCenter.current()
-            notificationCenter.removeAllPendingNotificationRequests()
+        notificationCenter.removeAllPendingNotificationRequests()
         let options: UNAuthorizationOptions = [.alert, .badge, .sound]
         notificationCenter.requestAuthorization(options: options) { success, error in
             DispatchQueue.main.async{
@@ -130,7 +130,7 @@ struct Notifications: View {
         content.body = "\(items[Int(randomInt)].quote ?? "I hope you have an amazing day!")"
         return content
     }
-
+    
 }
 
 

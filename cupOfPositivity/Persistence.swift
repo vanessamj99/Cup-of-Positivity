@@ -24,7 +24,7 @@ struct PersistenceController {
     private static func setPopulatedDataFlag() {
         UserDefaults.standard.set(true, forKey: "hasPopulatedData")
     }
-
+    
     private static func initializeContainer(inMemory: Bool) -> NSPersistentContainer {
         let container = NSPersistentContainer(name: "cupOfPositivity")
         if inMemory {
