@@ -35,7 +35,7 @@ struct AllCurrentQuotes: View {
                 }) {
                     Text("Delete")
                 }.alert(isPresented: $isAlertPresented) {
-                    Alert(title: Text("Delete"), message: Text("If you don't like a quote, delete it! You can delete a quote by swiping it. Make sure to click done when you are done deleting"), dismissButton: .default(Text("Ok")){
+                    Alert(title: Text("Delete"), message: Text("If you don't like a quote, delete it! You can delete a quote by swiping it. You will have to press delete for each quote you choose to remove."), dismissButton: .default(Text("Ok")){
                         isDeleteModeActive = true
                     })
                     
