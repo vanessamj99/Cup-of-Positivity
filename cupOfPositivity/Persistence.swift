@@ -4,7 +4,6 @@
 //
 //  Created by Vanessa Johnson on 2/17/24.
 //
-
 import CoreData
 
 struct PersistenceController {
@@ -17,9 +16,17 @@ struct PersistenceController {
         self.container = container
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+    
+    private static var hasPopulatedData: Bool {
+        return UserDefaults.standard.bool(forKey: "hasPopulatedData")
+    }
+
+    private static func setPopulatedDataFlag() {
+        UserDefaults.standard.set(true, forKey: "hasPopulatedData")
+    }
 
     private static func initializeContainer(inMemory: Bool) -> NSPersistentContainer {
-    let container = NSPersistentContainer(name: "cupOfPositivity")
+        let container = NSPersistentContainer(name: "cupOfPositivity")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -39,19 +46,24 @@ struct PersistenceController {
             specificQuote.quote = quoteArray[i]
             specificQuote.userAdded = false
             specificQuote.createdAt = Date()
+            specificQuote.id = UUID()
 
         }
 
         do {
             try viewContext.save()
+            setPopulatedDataFlag() // Set flag after data population
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
+    
     init(inMemory: Bool = false){
         let container = Self.initializeContainer(inMemory: inMemory)
-        Self.populateData(in: container)
+        if !Self.hasPopulatedData { // Check if data needs to be populated
+            Self.populateData(in: container)
+        }
         self.init(container: container)
     }
 }

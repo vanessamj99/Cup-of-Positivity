@@ -17,40 +17,85 @@ struct Notifications: View {
     
     @State private var newQuoteText = ""
     @State private var showMessage = false
+    @State private var enteringANewQuote = false
     
     var body: some View {
         NavigationView {
-        GeometryReader{ geometry in
             ZStack {
-                Image("cupOfPos").resizable().aspectRatio(contentMode: .fill).frame(minWidth: 0, maxWidth: .infinity).edgesIgnoringSafeArea(.all)
-                Text("Cup of Positivity").position(x:geometry.size.width/2, y:geometry.size.height/12).font(.custom("AirTravelersPersonalUse-BdIt", size: 50)).foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1)))
-                HStack{
-                    Spacer()
-                    TextField("Enter a new quote to add", text: $newQuoteText).font(.custom("AirTravelersPersonalUse-BdIt", size: 20))
-                    Button(action: {
-                        addPositivity()
-                        showMessage = true
-                    }, label: {
-                        Text("Add new Quote").font(.custom("AirTravelersPersonalUse-BdIt", size: 20)).foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1)))
-                    })
-                    Spacer()
-                    Spacer()
-                }.position(x:geometry.size.width/2, y:geometry.size.height/1.05)
+                Image("cupOfPos")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .edgesIgnoringSafeArea(.all)
                 
-                if showMessage {
-                    Text("Quote has been added").font(.custom("AirTravelersPersonalUse-BdIt", size: 20)).foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1))).position(x:geometry.size.width/2, y:geometry.size.height/1.01)
+                Text("Cup of Positivity")
+                    .position(x: UIScreen.main.bounds.width / 2, y: 60)
+                    .font(.custom("AirTravelersPersonalUse-BdIt", size: 50))
+                    .foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1)))
+                
+                if enteringANewQuote {
+                    HStack {
+                        Spacer()
+                        TextField("Enter a new quote to add", text: $newQuoteText)
+                            .font(.custom("AirTravelersPersonalUse-BdIt", size: 20))
+                        
+                        Button(action: {
+                            addPositivity()
+                            showMessage = true
+                        }) {
+                            Text("Add new Quote")
+                                .font(.custom("AirTravelersPersonalUse-BdIt", size: 20))
+                                .foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1)))
+                        }.alert(isPresented: $showMessage) {
+                            Alert(title: Text("Success!"), message: Text("Quote has been added"), dismissButton: .default(Text("Thanks!")){
+                                enteringANewQuote = false
+                            })
+                            
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    .position(x: 200, y: 720)
+                } else {
+                    HStack {
+                        Button(action: {
+                            enteringANewQuote = true
+                        }
+                               , label: {
+                            Text("I want to add a quote")
+                                    .font(.custom("AirTravelersPersonalUse-BdIt", size: 18))
+                                    .padding()
+                                    .background(Color.pink)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                                    .foregroundColor(Color.black)
+                        })
+                    
+                        
+                        NavigationLink(destination: FeedOfQuotes()) {
+                            Text("Current Quotes")
+                                .font(.custom("AirTravelersPersonalUse-BdIt", size: 18))
+                                .padding()
+                                .background(Color.pink)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .foregroundColor(Color.black)
+                        }
+                    }
+                    .padding()
+                    .position(x: 200, y: 720)
                 }
-            }.onAppear(){
+            
+            }
+            .onAppear {
                 notif()
             }
         }
-        }.navigationBarBackButtonHidden(true)
     }
     
     func addPositivity(){
         withAnimation{
             let newQuote = Quote(context: viewContext)
             newQuote.quote = newQuoteText
+            newQuote.id = UUID()
             do {
                 try viewContext.save()
             }
@@ -62,11 +107,6 @@ struct Notifications: View {
         
     }
     func notif() {
-//        var dateComponents = DateComponents()
-//        dateComponents.calendar = Calendar.current
-//        dateComponents.hour = 11
-//        dateComponents.minute = 04
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: contentInfo(), trigger: trigger)
