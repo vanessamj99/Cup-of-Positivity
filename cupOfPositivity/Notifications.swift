@@ -107,19 +107,26 @@ struct Notifications: View {
         
     }
     func notif() {
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString, content: contentInfo(), trigger: trigger)
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.removeAllPendingNotificationRequests()
-        let options: UNAuthorizationOptions = [.alert, .badge, .sound]
-        notificationCenter.requestAuthorization(options: options) { success, error in
-            DispatchQueue.main.async{
-                if success {
-                    notificationCenter.add(request)
+        notificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                notificationCenter.removeAllPendingNotificationRequests()
+                
+                for day in 0...63 {
+                    let date = Calendar.current.date(byAdding: .day, value: day, to: Date())!
+                    let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+                    
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                    let content = contentInfo()
+                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                    
+                    notificationCenter.add(request) { error in
+                        if let error = error {
+                            print("Error scheduling notification: \(error)")
+                        }
+                    }
                 }
             }
-            
         }
     }
     
