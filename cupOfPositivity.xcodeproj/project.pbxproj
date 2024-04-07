@@ -17,7 +17,6 @@
 		6E0DD3602B81C24A00FD87F7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0DD35F2B81C24A00FD87F7 /* Persistence.swift */; };
 		6E0DD3632B81C24A00FD87F7 /* cupOfPositivity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E0DD3612B81C24A00FD87F7 /* cupOfPositivity.xcdatamodeld */; };
 		6E5E88BD2BC19D23003D71E2 /* AllCurrentQuotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5E88BC2BC19D23003D71E2 /* AllCurrentQuotes.swift */; };
-		6E5E88BF2BC2008D003D71E2 /* FeedOfQuotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5E88BE2BC2008D003D71E2 /* FeedOfQuotes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +32,6 @@
 		6E0DD3622B81C24A00FD87F7 /* cupOfPositivity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = cupOfPositivity.xcdatamodel; sourceTree = "<group>"; };
 		6E47CE5E2B8CF54700D18D0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6E5E88BC2BC19D23003D71E2 /* AllCurrentQuotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCurrentQuotes.swift; sourceTree = "<group>"; };
-		6E5E88BE2BC2008D003D71E2 /* FeedOfQuotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedOfQuotes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +48,6 @@
 		6E0DD34A2B81C24900FD87F7 = {
 			isa = PBXGroup;
 			children = (
-				6E5E88BE2BC2008D003D71E2 /* FeedOfQuotes.swift */,
 				6E5E88BC2BC19D23003D71E2 /* AllCurrentQuotes.swift */,
 				6E0B4E842B93F661000CC814 /* fblovehearts.otf */,
 				6E0B4E802B939535000CC814 /* Airtravelers.otf */,
@@ -162,7 +159,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E5E88BF2BC2008D003D71E2 /* FeedOfQuotes.swift in Sources */,
 				6E0B4E832B939642000CC814 /* Notifications.swift in Sources */,
 				6E0DD3602B81C24A00FD87F7 /* Persistence.swift in Sources */,
 				6E5E88BD2BC19D23003D71E2 /* AllCurrentQuotes.swift in Sources */,

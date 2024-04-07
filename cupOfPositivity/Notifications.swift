@@ -65,19 +65,19 @@ struct Notifications: View {
                             Text("I want to add a quote")
                                 .font(.custom("AirTravelersPersonalUse-BdIt", size: 18))
                                 .padding()
-                                .background(Color.pink)
+                                .background(Color(UIColor(red: 235/255, green: 173/255, blue: 199/255, alpha: 1)))
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1)))
                         })
                         
                         
-                        NavigationLink(destination: FeedOfQuotes()) {
+                        NavigationLink(destination: AllCurrentQuotes()) {
                             Text("Current Quotes")
                                 .font(.custom("AirTravelersPersonalUse-BdIt", size: 18))
                                 .padding()
-                                .background(Color.pink)
+                                .background(Color(UIColor(red: 235/255, green: 173/255, blue: 199/255, alpha: 1)))
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color(UIColor(red: 117/255, green: 36/255, blue: 18/255, alpha: 1)))
                         }
                     }
                     .padding()
